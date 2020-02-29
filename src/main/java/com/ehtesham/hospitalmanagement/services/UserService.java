@@ -56,4 +56,8 @@ public class UserService {
             return userRepository.save(user);
         }
     }
+
+    public Iterable<User> getAllDoctors(Type type) {
+        return userRepository.findByUserType(type);
+    }
 }

@@ -1,5 +1,6 @@
 package com.ehtesham.hospitalmanagement.repositories;
 
+import com.ehtesham.hospitalmanagement.domain.Type;
 import com.ehtesham.hospitalmanagement.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Override
     Optional<User> findById(Long aLong);
+
+    Iterable<User> findByUserType(Type type);
 }

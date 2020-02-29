@@ -1,5 +1,6 @@
 package com.ehtesham.hospitalmanagement.web;
 
+import com.ehtesham.hospitalmanagement.domain.Type;
 import com.ehtesham.hospitalmanagement.domain.User;
 import com.ehtesham.hospitalmanagement.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,10 @@ public class UserController {
     @GetMapping("/patients_list/{username}")
     public List<User> getListOfPatients(@PathVariable String username) {
         return userService.findUserByUsername(username).getListOfPatients();
+    }
+
+    @GetMapping("/doctors_list")
+    public Iterable<User> getListOfDoctors() {
+        return userService.getAllDoctors(Type.DOCTOR);
     }
 }
