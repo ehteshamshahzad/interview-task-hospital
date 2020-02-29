@@ -1,6 +1,8 @@
 package com.ehtesham.hospitalmanagement.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +18,11 @@ public class Diagnoses {
 
     @NotBlank(message = "Diagnoses description is required")
     private String description;
+
+    @ManyToOne
+    private User patient;
+
+    private String patientName;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_at;
@@ -41,6 +48,25 @@ public class Diagnoses {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @JsonIgnore
+    public User getPatient() {
+        return patient;
+    }
+
+    @JsonProperty
+    public void setPatient(User patient) {
+        this.patient = patient;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
 
     public Date getCreated_at() {
         return created_at;

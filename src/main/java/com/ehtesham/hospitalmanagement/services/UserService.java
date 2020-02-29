@@ -60,4 +60,9 @@ public class UserService {
     public Iterable<User> getAllDoctors(Type type) {
         return userRepository.findByUserType(type);
     }
+
+    public User addDiagnoses(User user){
+
+        return userRepository.save(user);
+    }
 }
