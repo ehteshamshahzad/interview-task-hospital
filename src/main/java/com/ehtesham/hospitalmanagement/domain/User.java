@@ -1,11 +1,15 @@
 package com.ehtesham.hospitalmanagement.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -22,16 +26,18 @@ public class User {
     @NotBlank(message = "Please enter your full name")
     private String fullName;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "Password field is required")
     private String password;
 
-    @Transient
+    @JsonIgnore
     private String confirmPassword;
 
     @NotNull(message = "Please select type of user")
     private Type userType;
 
-    private Long assignedDoctorId;
+    @OneToMany/*(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)*/
+    private List<User> listOfPatients = new ArrayList<>();
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_at;
@@ -66,10 +72,12 @@ public class User {
         this.fullName = fullName;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
@@ -90,12 +98,12 @@ public class User {
         this.userType = userType;
     }
 
-    public Long getAssignedDoctorId() {
-        return assignedDoctorId;
+    public List<User> getListOfPatients() {
+        return listOfPatients;
     }
 
-    public void setAssignedDoctorId(Long assignedDoctorId) {
-        this.assignedDoctorId = assignedDoctorId;
+    public void setListOfPatients(List<User> listOfPatients) {
+        this.listOfPatients = listOfPatients;
     }
 
     public Date getCreated_at() {
