@@ -45,7 +45,7 @@ public class User {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_at;
 
-    public User() {
+    protected User() {
     }
 
     public Long getId() {

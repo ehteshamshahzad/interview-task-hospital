@@ -30,7 +30,7 @@ public class Diagnoses {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_at;
 
-    public Diagnoses() {
+    protected Diagnoses() {
     }
 
     public Long getId() {
