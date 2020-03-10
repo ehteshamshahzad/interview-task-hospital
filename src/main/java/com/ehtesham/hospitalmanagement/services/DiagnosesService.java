@@ -16,9 +16,18 @@ public class DiagnosesService {
     @Autowired
     UserRepository userRepository;
 
-    public Diagnoses saveOrUpdateDiagnoses(Diagnoses diagnoses) {
+    public Diagnoses saveOrUpdateDiagnoses(Diagnoses diagnoses, String username) {
+        User doctor = userRepository.findByUsername(username);
         User patient = userRepository.findByUsername(diagnoses.getPatient().getUsername());
-        diagnoses.setPatientName(patient.getFullName());
+
+        if (doctor.getListOfPatients().contains(patient)) {
+            diagnoses.setPatientName(patient.getFullName());
+        } else {
+            /*
+            * Need to throw exception.
+            * */
+            diagnoses.setId(null);
+        }
         return diagnosesRepository.save(diagnoses);
     }
 

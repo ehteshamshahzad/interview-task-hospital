@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v0/diagnoses")
@@ -18,15 +19,15 @@ public class DiagnosesController {
     DiagnosesService diagnosesService;
 
     @PostMapping("")
-    public ResponseEntity<?> createNewDiagnoses(@Valid @RequestBody Diagnoses diagnoses, BindingResult bindingResult) {
+    public ResponseEntity<?> createNewDiagnoses(@Valid @RequestBody Diagnoses diagnoses, BindingResult bindingResult, Principal principal) {
 
-        Diagnoses diagnoses1 = diagnosesService.saveOrUpdateDiagnoses(diagnoses);
+        Diagnoses diagnoses1 = diagnosesService.saveOrUpdateDiagnoses(diagnoses, principal.getName());
 
         return new ResponseEntity<Diagnoses>(diagnoses, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public Iterable<Diagnoses> getAllProjects() {
+    public Iterable<Diagnoses> getAllDiagnoses() {
         return diagnosesService.getAllDiagnoses();
     }
 }

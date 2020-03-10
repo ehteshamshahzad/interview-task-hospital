@@ -40,30 +40,24 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User getUserById(Long id){
+    public User getUserById(Long id) {
         return userRepository.getById(id);
     }
 
-    public User assignPatientToDoctor(User user) {
-        /*
-         * Problems:
-         *   1. Need to handle exception when User any user Type tries to add any other user Type into its list of Patients.
-         *   2. Need to make sure the user being added into list of patients actually exists.
-         *
-         * Note: The proper way is to send User type DOCTOR's ID (or authentication string) and the User type PATIENT's object
-         * */
+    public User assignPatientToDoctor(User user, String username) {
 
-        if (user.getUserType() == Type.DOCTOR) {
-            User doctor = userRepository.findByUsername(user.getUsername());
-            List<User> patientList = new ArrayList<>();
-            patientList = doctor.getListOfPatients();
+        User doctor1 = userRepository.findByUsername(username);
+        if ((doctor1.getUserType() == Type.DOCTOR) && (user.getUserType() == Type.PATIENT)) {
+            List<User> patientList1 = doctor1.getListOfPatients();
+            patientList1.add(user);
+            doctor1.setListOfPatients(patientList1);
 
-            patientList.add(user.getListOfPatients().get(user.getListOfPatients().size() - 1));
-            doctor.setListOfPatients(patientList);
-
-            return userRepository.save(doctor);
+            return userRepository.save(doctor1);
         } else {
             return userRepository.save(user);
+            /*
+            * Not a proper way to handle else condition. Need to throw proper exception.
+            * */
         }
     }
 

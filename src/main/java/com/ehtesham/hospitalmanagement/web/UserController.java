@@ -49,7 +49,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
-//        ResponseEntity<?>
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
@@ -84,13 +83,13 @@ public class UserController {
 
     @PostMapping("/add_patient")
     public ResponseEntity<?> addPatient(@Valid @RequestBody User user, BindingResult result, Principal principal) {
-        User doctor = userService.assignPatientToDoctor(user);
+        User doctor = userService.assignPatientToDoctor(user, principal.getName());
         return new ResponseEntity<User>(doctor, HttpStatus.CREATED);
     }
 
     @GetMapping("/patients_list/")
-    public List<User> getListOfPatients(@PathVariable String username, Principal principal) {
-        return userService.findUserByUsername(username).getListOfPatients();
+    public List<User> getListOfPatients(Principal principal) {
+        return userService.findUserByUsername(principal.getName()).getListOfPatients();
     }
 
     @GetMapping("/doctors_list")
