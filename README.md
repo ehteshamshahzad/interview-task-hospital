@@ -1,4 +1,4 @@
-# interview-task-hospital
+# Interview Task: Hospital Management
 Interview Task related to Hospital Management (Doctors and Patients)
 
 Requirements:
