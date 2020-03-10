@@ -19,4 +19,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findById(Long aLong);
 
     Iterable<User> findByUserType(Type type);
+
+    User getById(Long id);
 }
